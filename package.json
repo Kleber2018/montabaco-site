@@ -13,10 +13,10 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^11.2.14",
-    "@angular/cdk": "^10.2.7",
-    "@angular/common": "^10.2.5",
+    "@angular/cdk": "^12.2.9",
+    "@angular/common": "^12.2.10",
     "@angular/compiler": "^12.2.10",
-    "@angular/core": "^10.2.5",
+    "@angular/core": "^12.2.10",
     "@angular/fire": "^7.1.0",
     "@angular/flex-layout": "^12.0.0-beta.35",
     "@angular/forms": "^12.2.10",
@@ -51,9 +51,9 @@
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.1002.3",
+    "@angular-devkit/build-angular": "^12.2.10",
     "@angular/cli": "^11.2.14",
-    "@angular/compiler-cli": "^10.2.5",
+    "@angular/compiler-cli": "^11.2.14",
     "@angular/language-service": "^11.2.14",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",

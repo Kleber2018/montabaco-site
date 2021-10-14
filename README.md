@@ -37,7 +37,7 @@ ou
 ou atualizar globalmente:
 ```
     npm uninstall --save-dev angular-cli
-    npm install --save-dev @angular/cli@11.2.14
+    npm install --save-dev @angular/cli@latest
     npm i @angular/cli@11.2.14
 ```
 
@@ -199,7 +199,10 @@ ng update @angular/cdk@latest @angular/cli@latest @angular/core@latest rxjs@late
 npm i @angular/flex-layout@latest @sentry/browser@latest @angular/pwa@latest
 npm i @angular/pwa@latest ngx-mask@latest @angular/material@latest @angular/compiler@latest @angular/platform-browser@latest @angular/platform-browser-dynamic@latest
 npm i @angular/router@latest @angular/platform-browser-dynamic@latest @angular/platform-browser@latest @angular/fire@latest firebase@latest @angular/forms@latest
-
+npm i @angular-devkit/build-angular@latest
+npm i @angular/compiler-cli@11.2.14
+npm i @angular/core@latest
+npm i @angular/cdk@latest @angular/common@latest
 
  ## TEMPLATE
 

@@ -1,0 +1,27 @@
+.main {
+    width: 100%;
+    min-height: calc(100vh - 102px);
+  }
+
+  .button-routers {
+      padding: 7px 14px;
+      margin: 8px 0;
+      font-size: 103%;
+  }
+
+
+  @media screen and (min-width: 900px) {
+    .main {
+        padding: 0px 20px;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .main {
+        padding: 0px 40px;
+    }
+  }
+
+
+
+ 

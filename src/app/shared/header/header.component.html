@@ -1,0 +1,20 @@
+<header fxLayout="row" class="header header-true-{{disabled}}" fxLayoutAlign="space-between center">
+  <h1 class="headerTitle" fxLayoutAlign="start center">
+    <mat-icon>{{ iconName }}</mat-icon>
+    &nbsp;{{ title }}
+  </h1>
+  <!-- <mat-slide-toggle *ngIf="empresaStatus == 'Online'" (click)="alterarStatus(empresaId, '2-off')">{{empresaStatus}}</mat-slide-toggle> -->
+
+    <p class="{{usuarioStatus}}">{{ usuarioStatus }}</p>
+  
+  <!-- <div *ngIf="presence$ | async as presence">
+   {{ this.usuarioStatus }}
+  </div> -->
+
+</header>
+
+
+
+
+
+

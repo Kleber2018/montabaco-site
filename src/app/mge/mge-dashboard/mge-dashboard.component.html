@@ -1,0 +1,12 @@
+<app-layout
+  [sidenavItems]="sidenavItems">
+  <main class="main" fxLayout="column" >
+    <app-header [title]="'MGEs'" [iconName]="'dashboard'"></app-header>
+
+    <app-mge-list></app-mge-list>
+
+    <button mat-button routerLink="/mge/novo" *ngIf="usuario.rules.administrador" style="margin-top: 20px">Adicionar Mges</button>
+  </main>
+
+  <app-footer></app-footer>
+</app-layout>

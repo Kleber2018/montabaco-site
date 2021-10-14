@@ -1,0 +1,49 @@
+<app-layout
+  [sidenavItems]="sidenavItems">
+  <main class="main">
+    <section fxFlex="100%" fxLayout="column">
+      <app-header [title]="'Início'" [iconName]="'dashboard'"></app-header>
+      <h3 style="padding-left: 20px; margin-top: 10px;">Olá {{usuario.nome}}</h3>
+      <section fxFlex="100%" fxLayout="column" fxLayoutAlign="start center">
+
+        <h3 style="margin-top: 16px; margin-block-end: 8px;">SSE</h3>
+        <section fxLayout="row" fxLayout.lt-md="row wrap"  fxLayoutGap="4px" fxLayoutGap.sm="20px" fxLayoutGap.md="20px" fxLayoutGap.lg="20px" fxLayoutAlign="center">
+          <button mat-raised-button color="accent" routerLink="/solicitacao" class="button-routers">
+            <mat-icon>add</mat-icon>
+            Nova SSE
+          </button>
+          <button mat-raised-button  routerLink="/solicitacao/relatorio" class="button-routers">
+              <mat-icon>list</mat-icon>
+              Lista de SSE
+          </button>
+        </section>
+        <mat-divider></mat-divider>
+       
+        <h3 style="margin-top: 16px; margin-block-end: 8px;">Preventivas Sistematizadas</h3>
+        <section fxLayout="row" fxLayout.lt-md="row wrap"  fxLayoutGap="4px" fxLayoutGap.sm="20px" fxLayoutGap.md="20px" fxLayoutGap.lg="20px"  fxLayoutAlign="center">
+          <button mat-raised-button color="primary" routerLink="/mge" class="button-routers">
+            <mat-icon>assignment</mat-icon>
+            MGEs
+          </button>
+        </section>
+        <mat-divider></mat-divider>
+
+        <h3 style="margin-top: 16px; margin-block-end: 8px;">Movimentação de equipamento</h3>
+        <section fxLayout="row" fxLayout.lt-md="row wrap"  fxLayoutGap="4px" fxLayoutGap.sm="20px" fxLayoutGap.md="20px" fxLayoutGap.lg="20px"  fxLayoutAlign="center">
+          <button mat-raised-button routerLink="/movimentacao" class="button-routers">
+              <mat-icon>add</mat-icon>
+              Movimentar
+          </button>
+          <button mat-raised-button routerLink="/movimentacao/relatorio" class="button-routers">
+              <mat-icon>list</mat-icon>
+              Movimentações
+          </button>
+        </section>
+
+      </section>
+    </section>  
+  </main>
+</app-layout>
+    
+<app-footer></app-footer>
+  

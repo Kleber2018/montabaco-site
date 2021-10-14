@@ -1,0 +1,37 @@
+.header {
+  padding: 9px 6px;
+  margin: 5px 10px;
+}
+
+.headerTitle {
+  margin: 0px;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* justify-content: start; */
+  font-size: 1.2rem;
+  /* text-align: center; */
+}
+.header-Aberto-false{
+  border-radius: 5px;
+  background-color: rgba(0, 255, 149, 0.144);
+  color: green;
+}
+.header-Fechado-false, .header-Fechado-true, .header-Aberto-true  {
+  border-radius: 5px;
+  color: #b10425; ;
+  background-color: rgba(255, 0, 0, 0.144);
+}
+
+.header-carregando {
+  color: #b10425; 
+}
+
+.Conectado {
+  color: green;
+}
+
+.Desconectado, .Carregando {
+  color: #b10425;
+}
+
+

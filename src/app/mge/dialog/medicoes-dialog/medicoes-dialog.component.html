@@ -1,0 +1,178 @@
+<!-- <h2 mat-dialog-title >Medições</h2>
+<p>{{mge.OSE.localidade}} - {{mge.OSE.unidade}} </p> -->
+
+<main style="height: 100vh;">
+<!--  <div style="margin-block-end: 10px;">-->
+<!--    <button mat-stroked-button color="warn" *ngIf="mge.status!=='3-cancelado'"  (click)="alterarStatusSolicitacao(solicitacao, '3-cancelado')"><mat-icon>error_outline</mat-icon>Cancelar</button>-->
+<!--  </div>-->
+<!-- -->
+
+  <form [formGroup]="formMge" >
+
+      <!-- <section>
+        <div mat-card-avatar style="  margin-block-end: 10px; margin-top: -10px;"><mat-icon>spa</mat-icon></div>
+        <p class="card-title-txt">Movimentar equipamento:</p>
+      </section> -->
+
+      <section fxLayout="row" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+        <mat-form-field  appearance="outline" fxFlex="100%">
+          <mat-label>Data Execução</mat-label>
+          <input matInput [matDatepicker]="picker2"
+                [formControl]="data_execucao">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </section>
+
+      <section fxLayout="row" style="margin-top: -12px;" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+        <div style="margin: 0px" fxFlex="50%" *ngIf="hora_inic">
+          <div style="margin-top: -16px; height: 54px; margin-block-end: 16px;">
+              <ngx-timepicker-field [format]="24" [defaultTime]="'22:10'" [formControl]="hora_inic" [controlOnly]="true" ></ngx-timepicker-field>
+          </div>
+        </div>
+        <div style="margin: 0px" fxFlex="50%">
+          <div style="margin-top: -16px; height: 54px; margin-block-end: 16px;">
+              <ngx-timepicker-field [format]="24" [defaultTime]="'22:10'" [formControl]="hora_fim" [controlOnly]="true" ></ngx-timepicker-field>
+          </div>
+        </div>
+      </section>
+    
+      <section fxLayout="row"  style="margin-top: -20px;" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+          <mat-form-field appearance="outline" fxFlex="100%">
+              <mat-label>Tensão</mat-label>
+              <input
+                      matInput
+                      type="number"
+                      maxlength="6"
+                      placeholder="Menor (V)"
+                      formControlName="tensao">
+          </mat-form-field>
+      </section>
+
+      <section fxLayout="row"  style="margin-top: -20px; margin-block-end: -8px;" fxLayoutAlign="space-between" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+        <button mat-icon-button aria-label="Remover CMB" (click)="removerCMB()">
+          <mat-icon style="font-size: 16px;">remove</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Adicionar CMB" (click)="adicionarCMB()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </section>
+
+
+    <section fxLayout="row" >
+      <section *ngFor="let equipamento of equipamentos.controls; let i = index;"  [fxFlex]='fxCalculo'  >
+        <section [formGroup]="equipamento"  fxLayout="column" >
+          <section fxLayoutAlign="center">
+            <p style="margin: 0px;">CMB-{{i+1}}</p>
+          </section>
+
+          <section fxLayout="column"  fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+            <mat-form-field appearance="outline">
+                <mat-label>Patrimônio</mat-label>
+                <input
+                        matInput
+                        type="text"
+                        maxlength="12"
+                        placeholder="Patrimônio ou N.S."
+                        formControlName="identificacao">
+            </mat-form-field>
+          </section>
+  
+          <section fxLayout="column"  style="margin-top: -22px;"  fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+            <mat-form-field appearance="outline" >
+              <mat-label>Corrente</mat-label>
+              <input
+                      matInput
+                      type="number"
+                      maxlength="6"
+                      placeholder="Maior (A)"
+                      formControlName="a">
+            </mat-form-field>
+          </section>
+  
+          <section fxLayout="column"  style="margin-top: -22px;"  fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+            <mat-form-field appearance="outline" >
+              <mat-label>Horímetro</mat-label>
+              <input
+                      matInput
+                      type="number"
+                      maxlength="6"
+                      placeholder="Horas"
+                      formControlName="horimetro">
+            </mat-form-field>
+          </section>
+
+          <section fxLayout="column"  style="margin-top: -22px;"  fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+            <mat-form-field appearance="outline" >
+              <mat-label>Temperatura</mat-label>
+              <input
+                      matInput
+                      type="number"
+                      maxlength="6"
+                      placeholder="Maior (ºC)"
+                      formControlName="t">
+            </mat-form-field>
+          </section>
+
+          <section fxLayout="column"  style="margin-top: -22px;"  fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+            <mat-form-field appearance="outline" >
+              <mat-label>Vazão</mat-label>
+              <input
+                      matInput
+                      type="number"
+                      maxlength="5"
+                      placeholder="m³/h"
+                      formControlName="q">
+            </mat-form-field>
+          </section>
+
+          <section fxLayout="column"  style="margin-top: -22px;"  fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+            <mat-form-field appearance="outline" >
+              <mat-label>Pressão</mat-label>
+              <input
+                    matInput
+                    type="number"
+                    maxlength="5"
+                    placeholder="mca"
+                    formControlName="h">
+            </mat-form-field>
+          </section>
+  
+        </section>     
+      </section>
+    </section>
+   
+
+      <section fxLayout="row" style="margin-top: -12px;" fxLayout.xs="row wrap" fxLayoutGap.sm="4px" fxLayoutGap.md="4px" fxLayoutGap.lg="4px">
+          <mat-form-field  appearance="outline" fxFlex="100%">
+              <mat-label>Observações</mat-label>
+              <textarea 
+                      matInput
+                      type="text"
+                      maxlength="250"
+                      placeholder="Obs"
+                      formControlName="obs"></textarea>
+          </mat-form-field>
+      </section>
+
+
+      <section fxLayout="row" fxLayoutAlign="end" fxLayoutGap="4px"  style="margin-top: -10px; margin-block-end: 24px;">
+        <!-- <app-come-back-button (comeBackEvent)="comeBack()"></app-come-back-button> -->
+        <!-- <button mat-raised-button  color="accept" (click)="abrirCamera()"><mat-icon>camera_enhance</mat-icon>Tirar Foto</button> -->
+        <button mat-stroked-button mat-dialog-close style="padding: 0px 24px;">Fechar</button>
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="(!formMge.valid || !permiteEditar)"
+          (click)="submitFormMedicao()">
+            <mat-icon>done_all</mat-icon>
+            Salvar
+        </button>
+      </section>
+    </form>
+
+  </main>
+
+
+

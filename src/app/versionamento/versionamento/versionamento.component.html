@@ -1,0 +1,21 @@
+<main class="main" fxLayout="column" fxLayoutAlign="start start">
+     <section fxLayoutAlign="space-between start" class="header" [routerLink]="['/login']" >
+       <div  class="header-sidenav">
+         <img src="../../../assets/icons/192x192-transp.png" alt="GEMSD" height="54">
+       </div>
+       <div  class="header-sidenav">
+         <img src="../../../assets/icons/oie_98SYNe7uuSHM.png" alt="GEMSD" height="48">
+       </div>
+   
+       <!--<p class="titulo-header">      SANEPAR    </p>-->
+     </section>
+     <section fxLayoutAlign="start start"  fxLayout="column">
+      <div *ngFor="let versao of versoes" style="margin: 2px;">
+          <p><b>{{versao.data}} - {{versao.versao}}</b></p>
+          <p>{{versao.descricao}}</p>
+      </div>
+     </section>
+   </main>
+   
+   <app-footer></app-footer>
+   

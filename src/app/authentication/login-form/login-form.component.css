@@ -1,0 +1,58 @@
+.main {
+  width: 100%;
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f1f1;
+}
+
+.comeBackButtom {
+  color: #6200ee;
+}
+
+.header-sidenav {
+  margin-top: 16px;
+}
+
+.header {
+  height: 97px;
+  width: 100%;
+  padding: 10px 32px;
+  border-bottom: 1px solid gray;
+  background: white;
+}
+
+/*
+.titulo-header {
+  float: right;
+    font-size: 20px;
+    margin-top: 20px;
+}
+*/
+
+.button-esqueci-senha{
+  margin: 0px;
+  padding-right: 5px;
+}
+
+
+/* // celular */
+@media screen and (max-width: 599px) {
+  .div-buttons-acao{
+    margin: 16px;
+  }
+
+  .buttons-acao {
+    width: 220px;
+    height: 44px;
+  }
+
+
+}
+
+
+.carregando{
+  position: absolute;
+  z-index: 10;
+}

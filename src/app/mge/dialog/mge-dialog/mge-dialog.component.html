@@ -1,0 +1,48 @@
+<!-- <h2 mat-dialog-title >Medições</h2>
+<p>{{mge.OSE.localidade}} - {{mge.OSE.unidade}} </p> -->
+
+<main style="height: 100vh;">
+  <section fxLayout="column">
+    <h3>{{mge.OSE.localidade}} - {{mge.OSE.unidade}}</h3>
+    <h4 style="margin: 0px;">Corrente</h4>
+    <section *ngIf="correntes">
+      <h4 *ngIf="correntes.length == 0 && !carregando" style="margin: 8px 4px; color: brown;">Nenhuma medição encontrada</h4>
+      <div fxLayoutAlign="center" style="margin: 32px 12px;" *ngIf="carregando">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      
+      <canvas *ngIf="correntes.length > 0" baseChart width="400" height="250"
+        [datasets]="lineChartData"
+        [labels]="lineChartLabels"
+        [options]="lineChartOptions"
+        [colors]="lineChartColors"
+        [legend]="lineChartLegend"
+        [chartType]="lineChartType"
+        [plugins]="lineChartPlugins">
+      </canvas>
+
+      <mat-divider style="margin-top: 12px;"></mat-divider>
+
+      <h4 style="margin: 8px 0px;" *ngIf="correntes.length > 0">Horimetro</h4>
+      <div fxLayout="row" fxLayoutAlign="space-between start" *ngIf="correntes.length > 0">
+        <div fxLayout="column">
+          <p style="font-weight: bolder; margin: 6px 0px;">Data</p>
+          <div *ngFor="let item of horimetrosData">
+            <p>{{item}}</p>
+          </div>
+        </div>
+
+        <div *ngFor="let horimetro of horimetros let i=index" fxLayout="column">
+          <p style="font-weight: bolder; margin: 6px 0px;">CMB-{{i+1}}</p>
+          <div *ngFor="let hora of horimetro">
+            <p>{{hora}}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+</main>
+
+
+

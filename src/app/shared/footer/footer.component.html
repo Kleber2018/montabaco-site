@@ -1,0 +1,11 @@
+<footer fxFlex="100%" class="footer">
+  <div fxLayout="row">
+    <p class="footer-copyright" fxLayoutAlign="start center">
+      <button mat-icon-button aria-label="recarregar" (click)="verificarVersao()">
+        <mat-icon>update</mat-icon>
+      </button>
+      GEMSD <abbr class="abbreviation" title="Copyright">&copy;</abbr>  Eletromecânica 2020
+    </p>  
+    <p class="footer-version" fxLayoutAlign="start center" [routerLink]="['/versionamento']" >v.3.0.0 </p>
+  </div>
+</footer>

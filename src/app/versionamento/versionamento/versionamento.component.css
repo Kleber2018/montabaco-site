@@ -1,0 +1,26 @@
+.main {
+     width: 100%;
+     min-height: calc(100vh - 70px);
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     background-color: #f1f1f1;
+   }
+   
+   p {
+        margin: 4px;
+        font-size: 14px;
+   }
+
+   .header-sidenav {
+     margin-top: 16px;
+   }
+   
+   .header {
+     height: 97px;
+     width: 100%;
+     padding: 10px 32px;
+     border-bottom: 1px solid gray;
+     background: white;
+   }
+   

@@ -1,0 +1,19 @@
+<!-- <div mat-dialog-content> -->
+  <section style="margin: -24px;" *ngIf="data">
+    <button mat-icon-button	color="warn" (click)="removerReferenciaImg()" class="button-excluir"><mat-icon>delete</mat-icon></button>
+  
+    <img src="{{data.url}}" width="100%" height="100%">
+
+     
+  </section>
+<!-- </div> -->
+
+<mat-dialog-actions align="center" style="margin-top: 20px;">
+  <!-- <button mat-stroked-button fxHide.lt-md="false" fxHide.gt-sm="true" *ngIf="conteudoAlert.opcao1" (click)="dialogRef.close({retorno: 'opcao1', tela: 'celular'})" style="padding: 0 25px 0 25px; margin: 10px;">{{conteudoAlert.opcao1}}</button>
+  <button mat-stroked-button fxHide.lt-md="false" fxHide.gt-sm="true" *ngIf="conteudoAlert.opcao2" (click)="dialogRef.close({retorno: 'opcao2', tela: 'celular'})" style="padding: 0 25px 0 25px; margin: 10px;">{{conteudoAlert.opcao2}}</button>
+
+  <button mat-stroked-button fxHide.lt-md="true" fxHide.gt-sm="false" *ngIf="conteudoAlert.opcao1" (click)="dialogRef.close({retorno: 'opcao1', tela: 'computador'})" style="padding: 0 25px 0 25px; margin: 10px;">{{conteudoAlert.opcao1}}</button>
+  <button mat-stroked-button fxHide.lt-md="true" fxHide.gt-sm="false" *ngIf="conteudoAlert.opcao2" (click)="dialogRef.close({retorno: 'opcao2', tela: 'computador'})" style="padding: 0 25px 0 25px; margin: 10px;">{{conteudoAlert.opcao2}}</button> -->
+  <button mat-stroked-button mat-dialog-close cdkFocusInitial style="padding: 0 25px 0 25px; margin: 10px;">Voltar</button>
+
+</mat-dialog-actions>

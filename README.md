@@ -206,6 +206,11 @@ npm i @angular/cdk@latest @angular/common@latest
 
 npm i rxfire firebase rxjs --save
 
+
+erro no typescript
+npm uninstall -d typescript
+npm i typescript@4.3.5
+
  ## TEMPLATE
 
 

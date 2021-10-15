@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 // import { DemandService } from 'src/app/demand/demand.service';
-import { PresenceService } from 'src/app/authentication/presence.service';
+//import { PresenceService } from 'src/app/authentication/presence.service';
 import { Usuario } from '../../usuario/usuario.model';
 
 
@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public disabled = false;
   presence$;
 
-  constructor( private presenceService: PresenceService
+  constructor( //private presenceService: PresenceService
               ) { 
    
   }
@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   if (usuario) {
-    this.presence$ = this.presenceService.getPresence(usuario.uid);
+    //this.presence$ = this.presenceService.getPresence(usuario.uid);
 
 
     this.atualizarpresenca();
@@ -69,7 +69,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
    //atualiza o status a cada 10 minutos
    atualizarpresenca(){
     setInterval(t => {
-        this.presenceService.setPresence('Conectado')
+        //this.presenceService.setPresence('Conectado')
     },600000)
    }
    

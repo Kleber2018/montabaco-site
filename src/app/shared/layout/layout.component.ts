@@ -9,7 +9,7 @@ import { MatSidenav, MatDrawer } from '@angular/material/sidenav';
 import { SidenavItem } from '../model/sidenav-item.model';
 
 /**Services.*/
-import { AuthenticationService } from '../../authentication/authentication.service';
+
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Usuario } from '../../usuario/usuario.model';
 
@@ -28,7 +28,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
   public mode="side"//over para celualr
 
   constructor(
-    private authenticationService: AuthenticationService,
     private router: Router,
     private deviceService: DeviceDetectorService,
   ) {
@@ -76,7 +75,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   public logout(sidenav: MatDrawer): void {
-    this.authenticationService.logout();
+    //this.authenticationService.logout();
     sidenav.close();
   }
 }

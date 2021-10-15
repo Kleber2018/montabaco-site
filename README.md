@@ -204,6 +204,8 @@ npm i @angular/compiler-cli@11.2.14
 npm i @angular/core@latest
 npm i @angular/cdk@latest @angular/common@latest
 
+npm i rxfire firebase rxjs --save
+
  ## TEMPLATE
 
 

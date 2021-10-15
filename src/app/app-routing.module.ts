@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 /**Components.*/
-import { AuthenticationGuard } from './authentication/authentication.guard';
+//import { AuthenticationGuard } from './authentication/authentication.guard';
 
 const appRoutes: Routes = [
   //{ path: 'login', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },

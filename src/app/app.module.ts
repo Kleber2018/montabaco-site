@@ -14,10 +14,10 @@ import { environment } from '../environments/environment';
 
 /* Third party modules.*/
 import { NgxMaskModule, IConfig } from 'ngx-mask';
-import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireStorageModule } from '@angular/fire/storage';
+//import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth';
+//import { AngularFireModule } from '@angular/fire';
+//import { AngularFirestoreModule } from '@angular/fire/firestore';
+//import { AngularFireStorageModule } from '@angular/fire/storage';
 
 /* Modules.*/
 import { SharedModule } from './shared/shared.module';
@@ -26,9 +26,9 @@ import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app/app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 // import { NgxOneSignalModule } from 'ngx-onesignal';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
+//import { AngularFireDatabaseModule } from '@angular/fire/database';
 import * as Sentry from '@sentry/browser';
-import { AngularFireAnalyticsModule, ScreenTrackingService } from '@angular/fire/analytics';
+//import { AngularFireAnalyticsModule, ScreenTrackingService } from '@angular/fire/analytics';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 
 // import { registerLocaleData } from '@angular/common';
@@ -36,8 +36,11 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
-import { AngularFireFunctionsModule } from '@angular/fire/functions';
+//import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import {registerLocaleData} from '@angular/common';
+
+import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 /* Configurations.*/
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = { };
@@ -83,13 +86,15 @@ export class SentryErrorHandler implements ErrorHandler {
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AngularFireAnalyticsModule,
-    AngularFireDatabaseModule,
-    AngularFireFunctionsModule,
-    AngularFireAuthModule,
-    AngularFireStorageModule,
+    provideFirebaseApp(() => initializeApp( environment.firebase )),
+    provideFirestore(() => getFirestore()),
+    //AngularFireModule.initializeApp(environment.firebase),
+    //AngularFirestoreModule,
+    //AngularFireAnalyticsModule,
+    //AngularFireDatabaseModule,
+    //AngularFireFunctionsModule,
+    //AngularFireAuthModule,
+    //AngularFireStorageModule,
    // NgxMaterialTimepickerModule,
     NgxMaskModule.forRoot(options),
     SharedModule,
@@ -104,8 +109,8 @@ export class SentryErrorHandler implements ErrorHandler {
     NgxMaterialTimepickerModule
   ],
   providers: [
-    AngularFireAuth,
-    ScreenTrackingService,
+    //AngularFireAuth,
+    //ScreenTrackingService,
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: ErrorHandler, useValue: SentryErrorHandler }
   ],

@@ -16,15 +16,11 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { LayoutComponent } from './layout/layout.component';
 import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
-import { CropperDialogComponent } from './cropper-dialog/cropper-dialog.component';
+
 import { ImageCropperModule } from 'ngx-img-cropper';
 import { NgxMaskModule } from 'ngx-mask';
 
 
-
-import { ImgDialogComponent } from './img-dialog/img-dialog.component';
-import { ServicoDialogComponent } from '../movimentacao/dialog/servico-dialog/servico-dialog.component';
-import { OpcoesDialogComponent } from '../solicitacao/dialog/opcoes-dialog/opcoes-dialog.component';
 
 
 
@@ -33,9 +29,7 @@ import { OpcoesDialogComponent } from '../solicitacao/dialog/opcoes-dialog/opcoe
     FooterComponent,
     HeaderComponent,
     LayoutComponent,
-    AlertDialogComponent,
-    CropperDialogComponent,
-    ImgDialogComponent,
+    AlertDialogComponent
   ],
   imports: [
     CommonModule,

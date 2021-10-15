@@ -46,11 +46,11 @@ ou atualizar globalmente:
 
 Generate módulo com rota:
 
-```ng g module nome --routing=true```
+```ng g module medicao --routing=true```
 
 Generate componente em nova pasta selecionando o modulo:
 
-```ng g component nome/nome --module=nome```
+```ng g component medicao/medicao --module=medicao```
 
 
 

@@ -49,6 +49,8 @@ import localePt from '@angular/common/locales/pt';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import { ChartsModule } from 'ng2-charts';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireModule } from '@angular/fire/compat';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -88,10 +90,10 @@ export class SentryErrorHandler implements ErrorHandler {
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp( environment.firebase )),
     provideFirestore(() => getFirestore()),
-    //AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebase),
     //AngularFirestoreModule,
     //AngularFireAnalyticsModule,
-    //AngularFireDatabaseModule,
+    AngularFireDatabaseModule,
     //AngularFireFunctionsModule,
     //AngularFireAuthModule,
     //AngularFireStorageModule,
@@ -112,7 +114,7 @@ export class SentryErrorHandler implements ErrorHandler {
     //AngularFireAuth,
     //ScreenTrackingService,
     { provide: LOCALE_ID, useValue: 'pt-BR' },
-    { provide: ErrorHandler, useValue: SentryErrorHandler }
+    //{ provide: ErrorHandler, useValue: SentryErrorHandler }
   ],
   bootstrap: [
     AppComponent

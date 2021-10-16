@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MedicaoRoutingModule } from './medicao-routing.module';
 import { MedicaoComponent } from './medicao/medicao.component';
 import { SharedModule } from '../shared/shared.module';
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     MedicaoRoutingModule,
-    SharedModule
+    SharedModule,
+    ChartsModule
   ]
 })
 export class MedicaoModule { }

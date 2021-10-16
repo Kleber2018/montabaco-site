@@ -1,3 +1,12 @@
 <div *ngIf="medicao" style="padding: 12px;">
      <h2>{{medicao.temperatura}}ºC / {{medicao.umidade}}%  - {{medicao.updated}}</h2>
+     <canvas *ngIf="temperaturas.length > 0" baseChart width="400" height="250"
+          [datasets]="lineChartData"
+          [labels]="lineChartLabels"
+          [options]="lineChartOptions"
+          [colors]="lineChartColors"
+          [legend]="lineChartLegend"
+          [chartType]="lineChartType"
+          [plugins]="lineChartPlugins">
+        </canvas>
 </div>

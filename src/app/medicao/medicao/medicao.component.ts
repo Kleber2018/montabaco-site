@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { AngularFireAction, AngularFireDatabase } from '@angular/fire/compat/database';
 
-import { Observable, Subject } from 'rxjs';
+
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 
@@ -17,8 +18,7 @@ export class MedicaoComponent implements OnInit {
   public medicao;
   constructor(public db: AngularFireDatabase
     ) { 
-   
-    console.log(this.item)
+    this.inicializando()
     
     //db.child("numero_serie").child("medicao").set(data, user['idToken']) #edita o mesmo arquivo
 
@@ -26,19 +26,24 @@ export class MedicaoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.inicializando()
+
   }
 
-
+ 
   async inicializando(){
-    const ref = this.db.object('numero_serie').valueChanges();
+    const ref = this.db.object('0000000016223e72/medicao').valueChanges();
+    const ref2 = this.db.list('0000000016223e72/medicoes', ref =>   ref.limitToLast(20) ).valueChanges()
 
-    await ref.subscribe(async d => {console.log('d',d)
-      const r = d
-      console.log(r['medicao'])
-      this.medicao = r['medicao']
+    ref2.subscribe(items => items.forEach(item => { 
+      console.log('item', item);
+    }));
 
+
+    ref.subscribe(d => {
+        this.medicao = d
       }
       )
+
+
   }
 }

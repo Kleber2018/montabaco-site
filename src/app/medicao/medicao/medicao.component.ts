@@ -39,8 +39,19 @@ export class MedicaoComponent implements OnInit {
     }));
 
 
-    ref.subscribe(d => {
-        this.medicao = d
+    ref.subscribe(med => {
+      if(med){}
+        this.medicao = med
+        try {
+          var spl = med['updated'].split(' ')
+          var spl1 = spl[0].split('-')
+          var spl2 = spl[1].split(':')
+          this.medicao.updated = `${spl1[2]}/${spl1[1]} - ${spl2[0]}:${spl2[1]}`
+        } catch (error) {
+          this.medicao.updated = 'erro'
+        }
+        let temp1 = (med['temperatura'] - 32) / 1.8
+        this.medicao.temperatura = parseFloat(temp1.toFixed(1))
       }
       )
 

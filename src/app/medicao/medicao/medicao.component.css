@@ -1,0 +1,36 @@
+.main {
+     margin-top: 8px;
+     width: 100%;
+     min-height: calc(100vh - 102px);
+   }
+
+.section{
+     max-width: 800px;
+     width: 100%;
+}
+
+p {
+     margin: 8px 0px;
+}
+
+
+
+   @media screen and (min-width: 900px) {
+     .main {
+         padding: 0px 20px;
+     }
+   }
+   
+   @media screen and (min-width: 1200px) {
+     .main {
+         padding: 0px 50px;
+     }
+   }
+
+
+   .card-content {
+     margin: 0px;
+     padding: 0 8px;
+     width: 100%;
+     /* padding: 9px 0px 10px 0px; */
+     }

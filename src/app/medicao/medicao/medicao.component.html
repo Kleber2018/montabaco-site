@@ -1,12 +1,48 @@
-<div *ngIf="medicao" style="padding: 12px;">
-     <h2>{{medicao.temperatura}}ºC / {{medicao.umidade}}%  - {{medicao.updated}}</h2>
-     <canvas *ngIf="temperaturas.length > 0" baseChart width="400" height="250"
-          [datasets]="lineChartData"
-          [labels]="lineChartLabels"
-          [options]="lineChartOptions"
-          [colors]="lineChartColors"
-          [legend]="lineChartLegend"
-          [chartType]="lineChartType"
-          [plugins]="lineChartPlugins">
-        </canvas>
-</div>
+<main class="main" fxFlex="100%" fxLayoutAlign="center start">
+     <section fxLayout="column" class="section">
+          <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="center" *ngIf="medicao">
+               <h3>Ponta Grossa/PR</h3>
+          </section>
+
+          <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="center" *ngIf="medicao">
+
+               <mat-card fxLayout="column" fxLayoutAlign="space-between start">
+                    <mat-card-content fxLayout="row" fxLayoutAlign="space-between start">
+                         <section fxLayout="column" class="card-content" fxLayoutAlign="center center" style="color: darkred;">
+                              <p>Temperatura</p>
+                              <div fxLayout="row">
+                                   <mat-icon aria-hidden="false" aria-label="Temperatura icone" style="margin: 8px 0px;">thermostat</mat-icon>
+                                   <h2 style="margin: 8px 0px;">{{medicao.temperatura}}ºC</h2>
+                              </div>
+                         </section>
+                         <section fxLayout="column" class="card-content" fxLayoutAlign="center center" style="color: blue;">
+                              <p>Umidade</p>
+                              <div fxLayout="row">
+                                   <mat-icon aria-hidden="false" aria-label="Temperatura icone" style="margin: 8px 0px;">water_drop</mat-icon>
+                                   <h2 style="margin: 8px 0px;">{{medicao.umidade}}%</h2>
+                              </div>
+                             
+                         </section>
+                    </mat-card-content>
+                    <mat-card-content fxLayout="column" class="card-content" fxLayoutAlign="end end">
+                         <p>{{medicao.updated}}</p>
+                    </mat-card-content>
+               </mat-card>
+          </section>      
+               
+
+
+          <section *ngIf="medicao" style="padding: 12px;">
+               <canvas *ngIf="temperaturas.length > 0" baseChart width="400" height="250"
+                    [datasets]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [options]="lineChartOptions"
+                    [colors]="lineChartColors"
+                    [legend]="lineChartLegend"
+                    [chartType]="lineChartType"
+                    [plugins]="lineChartPlugins">
+                  </canvas>
+          </section>
+     </section>
+</main>
+

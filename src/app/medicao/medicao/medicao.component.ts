@@ -1,12 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AngularFireAction, AngularFireDatabase } from '@angular/fire/compat/database';
+import { AngularFireAction, AngularFireDatabase, AngularFireList, snapshotChanges } from '@angular/fire/compat/database';
 
-
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { first, map, takeUntil } from 'rxjs/operators';
 import { Color, ThemeService } from 'ng2-charts';
 import { ChartDataSets, ChartOptions, Chart  } from 'chart.js';
 import { Label } from 'ng2-charts/lib/base-chart.directive';
+import { MedicaoService } from '../medicao.service';
 type Theme = 'light-theme' | 'dark-theme';
 @Component({
   selector: 'app-medicao',
@@ -14,6 +14,7 @@ type Theme = 'light-theme' | 'dark-theme';
   styleUrls: ['./medicao.component.css']
 })
 export class MedicaoComponent implements OnInit {
+  private end: Subject<boolean> = new Subject();
   item
   lineChart: any;
   public temperaturas: any =  []
@@ -125,60 +126,38 @@ setCurrentTheme(theme: Theme) {
   this.selectedTheme = theme;
 }
 
-
-
-
-
-
-
+  public medidores = []
   public medicao;
-  constructor(public db: AngularFireDatabase, private themeService: ThemeService
-    ) { 
-    this.inicializando()
-    
-    //db.child("numero_serie").child("medicao").set(data, user['idToken']) #edita o mesmo arquivo
-
-   
+  constructor(
+    public db: AngularFireDatabase, 
+    private themeService: ThemeService,
+    private medicaoService: MedicaoService
+    ) {     
+      this.getMedidoresPromise()
   }
 
   ngOnInit(): void {
-
   }
 
- 
-  async inicializando(){
-    const ref = this.db.object('0000000016223e72/medicao').valueChanges();
-    const ref2 = this.db.list('0000000016223e72/medicoes', ref =>   ref.limitToLast(20) ).valueChanges()
 
-    ref2.subscribe(items => {
-        var umidades = []
-        var datas = []
-        console.log('antes', this.lineChartData)
-        items.forEach(item => { 
-          var dadosGrafico = [['Data', 'Umidade', 'Temperatura']]
-          //dadosGrafico.push([new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes(),item['umidade'], item['temperatura']])
-          //this.lineChartLabels.push(new Date(item['updated']).getDay()+ " - " + new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes())
-          this.lineChartLabels.push(item['updated'])
-          umidades.push(item['umidade'])
-          var t = (item['temperatura'] - 32) / 1.8
-          this.temperaturas.push(parseFloat(t.toFixed(1)))
-          //console.log('dddd', parseFloat(t.toFixed(1)), item['temperatura'])
-          //this.lineChartData.push({data: item['temperatura'], label:"Temperatura"}, {data: item['umidade'], label:"Umidade"})
-          //datas.push(new Date(item['updated']).getDay()+ " - " + new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes())
-        })
-        console.log('teste22', this.lineChartData)
-        this.lineChartData.push({data: this.temperaturas, label:"Temperatura"}, {data: umidades, label:"Umidade"})
-        console.log('teste222', this.lineChartData)
 
-        //this.lineChartMethod(temperaturas, umidades, datas)
-      }
+  async getMedidoresPromise(){
+    this.medidores = await this.medicaoService.getMedidores().pipe(first()).toPromise().then(res => {
+      this.medidores = res.map(e => {
+        //console.log(e.payload.val())
+        return e.key
+      });
+      return  this.medidores 
+    });
+    if(this.medidores){
+      this.getMedicaoSubscribe(this.medidores[1])
+      this.getMedicoesSubscribe(this.medidores[1])
+    }
+  }
 
-    );
-    
-    //;
-
-    ref.subscribe(med => {
-      if(med){}
+  getMedicaoSubscribe(id: string){
+    this.medicaoService.getMedicao(id).pipe().subscribe(med => {
+      if(med){
         this.medicao = med
         try {
           var spl = med['updated'].split(' ')
@@ -191,6 +170,37 @@ setCurrentTheme(theme: Theme) {
         let temp1 = (med['temperatura'] - 32) / 1.8
         this.medicao.temperatura = parseFloat(temp1.toFixed(1))
       }
-      )
+    })
+  }
+
+  getMedicoesSubscribe(id: string){
+    this.medicaoService.getMedicoes(id).pipe().subscribe(items => {
+      var umidades = []
+      var temps = []
+      //var datas = []
+      this.temperaturas = []
+      items.forEach(item => { 
+        var dadosGrafico = [['Data', 'Umidade', 'Temperatura']]
+        //dadosGrafico.push([new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes(),item['umidade'], item['temperatura']])
+        //this.lineChartLabels.push(new Date(item['updated']).getDay()+ " - " + new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes())
+        this.lineChartLabels.push(item['updated'])
+        umidades.push(item['umidade'])
+        var t = (item['temperatura'] - 32) / 1.8
+        temps.push(parseFloat(t.toFixed(1)))
+        this.temperaturas.push(parseFloat(t.toFixed(1)))
+        //console.log('dddd', parseFloat(t.toFixed(1)), item['temperatura'])
+        //this.lineChartData.push({data: item['temperatura'], label:"Temperatura"}, {data: item['umidade'], label:"Umidade"})
+        //datas.push(new Date(item['updated']).getDay()+ " - " + new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes())
+      })
+      this.lineChartData.push({data: temps, label:"Temperatura"}, {data: umidades, label:"Umidade"})
+      //this.lineChartMethod(temperaturas, umidades, datas)
+    }
+  );
+  }
+
+
+  ngOnDestroy(): void {
+    this.end.next();
+    this.end.complete();
   }
 }

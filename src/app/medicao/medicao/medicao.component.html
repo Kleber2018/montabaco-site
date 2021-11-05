@@ -32,7 +32,7 @@
                
 
 
-          <section *ngIf="medicao" style="padding: 12px;">
+          <section *ngIf="medicao" style="padding: 12px; margin-block-end: 20px;">
                <canvas *ngIf="temperaturas.length > 0" baseChart width="400" height="250"
                     [datasets]="lineChartData"
                     [labels]="lineChartLabels"
@@ -43,6 +43,16 @@
                     [plugins]="lineChartPlugins">
                   </canvas>
           </section>
+          <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="center space-between"  *ngFor="let medidor of medidores" style='padding: 4px;'>
+               <button mat-raised-button 
+               (click)="getMedicoesSubscribe(medidor)">
+                 {{medidor}}
+             </button>
+          </section>
      </section>
+
+     
+
+
 </main>
 

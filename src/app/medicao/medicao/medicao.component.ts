@@ -150,7 +150,6 @@ setCurrentTheme(theme: Theme) {
       return  this.medidores 
     });
     if(this.medidores){
-      this.getMedicaoSubscribe(this.medidores[1])
       this.getMedicoesSubscribe(this.medidores[1])
     }
   }
@@ -174,16 +173,22 @@ setCurrentTheme(theme: Theme) {
   }
 
   getMedicoesSubscribe(id: string){
+    this.getMedicaoSubscribe(id)
     this.medicaoService.getMedicoes(id).pipe().subscribe(items => {
       var umidades = []
       var temps = []
+      this.lineChartData = []
+      this.lineChartLabels = []
       //var datas = []
       this.temperaturas = []
       items.forEach(item => { 
         var dadosGrafico = [['Data', 'Umidade', 'Temperatura']]
         //dadosGrafico.push([new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes(),item['umidade'], item['temperatura']])
         //this.lineChartLabels.push(new Date(item['updated']).getDay()+ " - " + new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes())
-        this.lineChartLabels.push(item['updated'])
+        var spl = item['updated'].split(' ')
+        var spl1 = spl[0].split('-')
+        var spl2 = spl[1].split(':')
+        this.lineChartLabels.push(`${spl1[2]}/${spl1[1]} - ${spl2[0]}:${spl2[1]}`)
         umidades.push(item['umidade'])
         var t = (item['temperatura'] - 32) / 1.8
         temps.push(parseFloat(t.toFixed(1)))
@@ -192,10 +197,11 @@ setCurrentTheme(theme: Theme) {
         //this.lineChartData.push({data: item['temperatura'], label:"Temperatura"}, {data: item['umidade'], label:"Umidade"})
         //datas.push(new Date(item['updated']).getDay()+ " - " + new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes())
       })
-      this.lineChartData.push({data: temps, label:"Temperatura"}, {data: umidades, label:"Umidade"})
+      this.lineChartData.push({data: temps, label:"Temperatura (ºC)"}, {data: umidades, label:"Umidade (%)"})
       //this.lineChartMethod(temperaturas, umidades, datas)
     }
-  );
+  )
+
   }
 
 

@@ -48,7 +48,15 @@ export class MedicaoComponent implements OnInit {
       pointHoverBorderColor: 'rgba(255,0,0,0.8)'
     },
 
-    { // dark grey
+    { // orange
+      backgroundColor: 'rgba(255,140,0,0)',
+      borderColor: 'orange',
+      pointBackgroundColor: 'rgba(255,140,0,1)',
+      pointBorderColor: 'orange',
+      pointHoverBackgroundColor: '#0000FF',
+      pointHoverBorderColor: 'rgba(255,140,0,1)'
+    },
+    { // blue
       backgroundColor: 'rgba(0,0,255,0)',
       borderColor: 'blue',
       pointBackgroundColor: 'rgba(0,0,255,1)',
@@ -177,12 +185,13 @@ setCurrentTheme(theme: Theme) {
     this.medicaoService.getMedicoes(id).pipe().subscribe(items => {
       var umidades = []
       var temps = []
+      var temps2 = []
       this.lineChartData = []
       this.lineChartLabels = []
       //var datas = []
       this.temperaturas = []
       items.forEach(item => { 
-        var dadosGrafico = [['Data', 'Umidade', 'Temperatura']]
+        var dadosGrafico = [['Data', 'Umidade', 'Temperatura', 'Temperatura2']]
         //dadosGrafico.push([new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes(),item['umidade'], item['temperatura']])
         //this.lineChartLabels.push(new Date(item['updated']).getDay()+ " - " + new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes())
         var spl = item['updated'].split(' ')
@@ -191,13 +200,15 @@ setCurrentTheme(theme: Theme) {
         this.lineChartLabels.push(`${spl1[2]}/${spl1[1]} - ${spl2[0]}:${spl2[1]}`)
         umidades.push(item['umidade'])
         var t = (item['temperatura'] - 32) / 1.8
+        var t2 = (item['temperatura2'] - 32) / 1.8
         temps.push(parseFloat(t.toFixed(1)))
+        temps2.push(parseFloat(t2.toFixed(1)))
         this.temperaturas.push(parseFloat(t.toFixed(1)))
         //console.log('dddd', parseFloat(t.toFixed(1)), item['temperatura'])
         //this.lineChartData.push({data: item['temperatura'], label:"Temperatura"}, {data: item['umidade'], label:"Umidade"})
         //datas.push(new Date(item['updated']).getDay()+ " - " + new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes())
       })
-      this.lineChartData.push({data: temps, label:"Temperatura (ºC)"}, {data: umidades, label:"Umidade (%)"})
+      this.lineChartData.push({data: temps, label:"Temperatura (ºC)"}, {data: temps2, label:"Temperatura2 (ºC)"}, {data: umidades, label:"Umidade (%)"})
       //this.lineChartMethod(temperaturas, umidades, datas)
     }
   )

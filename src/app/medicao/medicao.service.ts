@@ -33,6 +33,6 @@ export class MedicaoService {
   }
 
   getMedicoes(id: string){
-    return this.db.list('medidores/'+id+'/medicoes', ref =>   ref.limitToLast(30) ).valueChanges()
+    return this.db.list('medidores/'+id+'/medicoes', ref =>   ref.orderByChild('filtro').equalTo(0).limitToLast(40) ).valueChanges()
   }
 }

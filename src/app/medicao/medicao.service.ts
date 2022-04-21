@@ -14,9 +14,11 @@ import { createTrue } from 'typescript';
 })
 export class MedicaoService {
   listMedidores
+  listMedidoresViews
  
   constructor(private db: AngularFireDatabase,) {
     this.listMedidores = db.list('medidores');
+    this.listMedidoresViews = db.list('views');
   }
   getTimeZone() {
     return new Date().toString();
@@ -24,7 +26,7 @@ export class MedicaoService {
 
  //snapshotChanges retorna metadados
   getMedidores() {
-    return this.listMedidores.snapshotChanges(); // mantem atualizado em realtime
+    return this.listMedidoresViews.snapshotChanges(); // mantem atualizado em realtime
   }
 
   //valueChanges retorna somente valores

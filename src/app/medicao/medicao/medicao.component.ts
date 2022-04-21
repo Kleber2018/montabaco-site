@@ -134,7 +134,8 @@ setCurrentTheme(theme: Theme) {
   this.selectedTheme = theme;
 }
 
-  public medidores = []
+  public medidores //= ['000000003862b5f0', '000000005ff1c9d4', '0000000093348e20']
+
   public medicao;
   constructor(
     public db: AngularFireDatabase, 
@@ -152,13 +153,19 @@ setCurrentTheme(theme: Theme) {
   async getMedidoresPromise(){
     this.medidores = await this.medicaoService.getMedidores().pipe(first()).toPromise().then(res => {
       this.medidores = res.map(e => {
+        console.log('chegou', e)
         //console.log(e.payload.val())
-        return e.key
+        return {"id" : e.key,
+                "order" :e.payload.val()}
+      });
+      console.log('chegou medidores', this.medidores )
+      this.medidores.sort((a, b)=> {
+        return +a.order - +b.order
       });
       return  this.medidores 
     });
     if(this.medidores){
-      this.getMedicoesSubscribe(this.medidores[1])
+      this.getMedicoesSubscribe(this.medidores[0].id)
     }
   }
 

@@ -1,7 +1,7 @@
 <main class="main" fxFlex="100%" fxLayoutAlign="center start">
      <section fxLayout="column" class="section">
           <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="center" *ngIf="medicao">
-               <h3>Ponta Grossa/PR</h3>
+               <h3>São João do Triunfo/PR</h3>
           </section>
 
           <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="center" *ngIf="medicao">
@@ -45,8 +45,8 @@
           </section>
           <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="center space-between"  *ngFor="let medidor of medidores" style='padding: 4px;'>
                <button mat-raised-button 
-               (click)="getMedicoesSubscribe(medidor)">
-                 {{medidor}}
+               (click)="getMedicoesSubscribe(medidor.id)">
+                 {{medidor.id}}
              </button>
           </section>
      </section>

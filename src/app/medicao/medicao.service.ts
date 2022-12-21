@@ -15,10 +15,12 @@ import { createTrue } from 'typescript';
 export class MedicaoService {
   private estufasCollection: CollectionReference;
   private medicoesCollection: CollectionReference;
+  private logsCollection: CollectionReference;
 
   constructor(protected db: Firestore) {
     this.estufasCollection = collection(this.db, "estufas");
     this.medicoesCollection = collection(this.db, "monitoramento");
+    this.logsCollection = collection(this.db, "log");
   }
   getTimeZone() {
     return new Date().toString();
@@ -84,4 +86,18 @@ export class MedicaoService {
        )
      );
   }
+
+  async getLogs(id: string){
+    // return this.db.object('monitoramento/'+id+'/medicao').valueChanges();
+     return await getDocs(query(this.logsCollection, 
+       where("0", "==", id),
+     //  where("filtro", "==", 0),
+      //where("createdAt", ">", timestampInic),
+      // where("createdAt", "<", timestampFim),
+      orderBy("createdAt", "desc"), 
+       limit(50)
+       )
+     );
+     //return this.db.object('medidores/'+id+'/medicao').valueChanges();
+   }
 }

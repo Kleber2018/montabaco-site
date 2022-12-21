@@ -49,6 +49,47 @@
                     {{medidor.id}}
                </button>
           </section>
+          <section fxLayout="column"  fxLayoutAlign="center space-between">
+               <h3>START</h3>
+               <section fxFlex="100%"  fxLayout="row"  *ngFor="let log of logs" >
+                    <section *ngIf="log[3] == 'START'" fxLayout="row" style='padding: 2px;'>
+                         <p class="margin">
+                              {{log.createdAt.seconds*1000 | date: 'dd/MM/yy HH:mm'}}
+                         </p>
+                         <p>
+                              Alarme: {{log[6]}}
+                          </p>
+                         <p>
+                             V: {{log[9]}}
+                         </p>
+                         <p>
+                              | {{log[10]}} | 
+                         </p>
+                    </section>
+               </section>
+
+               <h3>SET</h3>
+               <!-- msg_MQTT_set = 0 id + "#" +1 cod_secure + "#2 L#3 SET#"+ 4 String(set_temp) + "#"+ 5 String(set_umid) + "#" +6 String(status_ventoinha_rele) + "#" +7 String(t.mday) + "/" + String(t.mon) + "/"  + String(t.year-2000) +"#"+ String(t.hour) + ":" + String(t.min) +"#"+ String(numero_etapa)+"#";      -->
+               <section fxFlex="100%"  fxLayout="row"  *ngFor="let log of logs">
+                    <section *ngIf="log[3] == 'SET'" fxLayout="row" style='padding: 2px;'>
+                         <p class="margin">
+                              local: {{log[7]}} {{log[8]}}
+                         </p>
+                         <p class="margin">
+                              server: {{log.createdAt.seconds*1000 | date: 'dd/MM/yy HH:mm'}}
+                         </p>
+                         <p>
+                              | SET T: {{log[4]}} | 
+                         </p>
+                         <p>
+                              | SET U: {{log[5]}} | 
+                         </p>
+                         <p>
+                              |ventoinha {{log[6]}} | 
+                         </p>
+                    </section>
+               </section>
+          </section>
      </section>
 
      

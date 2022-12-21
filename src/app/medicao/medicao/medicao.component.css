@@ -4,13 +4,14 @@
      min-height: calc(100vh - 102px);
    }
 
+
 .section{
      max-width: 800px;
      width: 100%;
 }
 
 p {
-     margin: 8px 0px;
+     margin: 2px 3px;
 }
 
 

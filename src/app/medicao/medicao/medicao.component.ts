@@ -7,6 +7,7 @@ import { Color, ThemeService } from 'ng2-charts';
 import { ChartDataSets, ChartOptions, Chart  } from 'chart.js';
 import { Label } from 'ng2-charts/lib/base-chart.directive';
 import { MedicaoService } from '../medicao.service';
+import { Log } from 'src/app/shared/model/log.model';
 type Theme = 'light-theme' | 'dark-theme';
 @Component({
   selector: 'app-medicao',
@@ -137,6 +138,7 @@ setCurrentTheme(theme: Theme) {
   public medidores //= ['000000003862b5f0', '000000005ff1c9d4', '0000000093348e20']
 
   public medicao = {temperatura: 0, umidade: 0, updated: "sem medição"};
+  public logs: Log[] = [];
   constructor(
     public db: AngularFireDatabase, 
     private themeService: ThemeService,
@@ -196,8 +198,21 @@ setCurrentTheme(theme: Theme) {
     })
   }
 
+  getLogsSubscribe(id: string){
+    this.logs = [];
+    // msg_MQTT_set = id + "#" +cod_secure + "#L#SET#"+ String(set_temp) + "#"+ String(set_umid) + "#" + String(status_ventoinha_rele) + "#" + String(t.mday) + "/" + String(t.mon) + "/"  + String(t.year-2000) +"#"+ String(t.hour) + ":" + String(t.min) +"#"+ String(numero_etapa)+"#";     
+    this.medicaoService.getLogs(id).then(lgs => {
+      lgs.docs.map(lg => {
+        console.log(lg.data())
+        this.logs.push(lg.data());
+      })
+    })
+
+  }
+
   getMedicoesSubscribe(id: string){
     this.getMedicaoSubscribe(id)
+    this.getLogsSubscribe(id)
     this.medicaoService.getMedicoes(id).then(medicoes => {
       var umidades = []
       var umidades2 = []

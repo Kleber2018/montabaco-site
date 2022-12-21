@@ -236,5 +236,5 @@ Deploy do build no firebase:
       Escolhe o diretório public (dist/pasta)
       Sigle-page: y
       Overwite index.html: n
-  ng build --prod && firebase deploy --only hosting:montabaco
+  ng build --prod && firebase deploy --only hosting:apfumo
 

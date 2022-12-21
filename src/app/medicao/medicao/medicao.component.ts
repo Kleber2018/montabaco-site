@@ -136,7 +136,7 @@ setCurrentTheme(theme: Theme) {
 
   public medidores //= ['000000003862b5f0', '000000005ff1c9d4', '0000000093348e20']
 
-  public medicao;
+  public medicao = {temperatura: 0, umidade: 0, updated: "sem medição"};
   constructor(
     public db: AngularFireDatabase, 
     private themeService: ThemeService,
@@ -151,12 +151,12 @@ setCurrentTheme(theme: Theme) {
 
 
   async getMedidoresPromise(){
-    this.medidores = await this.medicaoService.getMedidores().pipe(first()).toPromise().then(res => {
-      this.medidores = res.map(e => {
+    this.medidores = await this.medicaoService.getMedidores().then(async res => {
+      this.medidores = await res.docs.map((e, index) => {
         console.log('chegou', e)
         //console.log(e.payload.val())
-        return {"id" : e.key,
-                "order" :e.payload.val()}
+        return {id : e.data().id,
+                order : index+1 }
       });
       console.log('chegou medidores', this.medidores )
       this.medidores.sort((a, b)=> {
@@ -170,52 +170,73 @@ setCurrentTheme(theme: Theme) {
   }
 
   getMedicaoSubscribe(id: string){
-    this.medicaoService.getMedicao(id).pipe().subscribe(med => {
-      if(med){
-        this.medicao = med
-        try {
-          var spl = med['updated'].split(' ')
-          var spl1 = spl[0].split('-')
-          var spl2 = spl[1].split(':')
-          this.medicao.updated = `${spl1[2]}/${spl1[1]} - ${spl2[0]}:${spl2[1]}`
-        } catch (error) {
-          this.medicao.updated = 'erro'
+    this.medicaoService.getMedicao(id).then(med => {
+      var primeiraMedicao = true;
+      med.docs.map(e => { 
+        if(primeiraMedicao){
+          this.medicao.updated = new Date(e.data().createdAt * 1000).getDate()+"/"+new Date(e.data().createdAt * 1000).getMonth()+ " - " + new Date(e.data().createdAt * 1000).getHours() + ":"+ new Date(e.data().createdAt * 1000).getMinutes()
+          primeiraMedicao = false;
+          this.medicao.temperatura = e.data().temp
+          this.medicao.umidade = e.data().umid
         }
-        let temp1 = (med['temperatura'] - 32) / 1.8
-        this.medicao.temperatura = parseFloat(temp1.toFixed(1))
-      }
+      })
+      // if(med){
+      //   this.medicao
+      //   try {
+      //     var spl = med['createdAt'].split(' ')
+      //     var spl1 = spl[0].split('-')
+      //     var spl2 = spl[1].split(':')
+      //     this.medicao.updated = `${spl1[2]}/${spl1[1]} - ${spl2[0]}:${spl2[1]}`
+      //   } catch (error) {
+      //     this.medicao.updated = 'erro'
+      //   }
+      //   let temp1 = (med['temperatura'] - 32) / 1.8
+      //   this.medicao.temperatura = parseFloat(temp1.toFixed(1))
+      // }
     })
   }
 
   getMedicoesSubscribe(id: string){
     this.getMedicaoSubscribe(id)
-    this.medicaoService.getMedicoes(id).pipe().subscribe(items => {
+    this.medicaoService.getMedicoes(id).then(medicoes => {
       var umidades = []
+      var umidades2 = []
       var temps = []
       var temps2 = []
       this.lineChartData = []
       this.lineChartLabels = []
+      //var primeiraMedicao = true;
       //var datas = []
       this.temperaturas = []
-      items.forEach(item => { 
+      medicoes.docs.map(e => { 
+        // if(primeiraMedicao){
+        //   this.medicao.updated = new Date(e.data().createdAt * 1000).getDate()+"/"+new Date(e.data().createdAt * 1000).getMonth()+ " - " + new Date(e.data().createdAt * 1000).getHours() + ":"+ new Date(e.data().createdAt * 1000).getMinutes()
+        //   primeiraMedicao = false;
+        //   this.medicao.temperatura = e.data().temp
+        //   this.medicao.umidade = e.data().umid
+        // }
+       // console.log(e.data())
         var dadosGrafico = [['Data', 'Umidade', 'Temperatura', 'Temperatura2']]
         //dadosGrafico.push([new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes(),item['umidade'], item['temperatura']])
         //this.lineChartLabels.push(new Date(item['updated']).getDay()+ " - " + new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes())
-        var spl = item['updated'].split(' ')
-        var spl1 = spl[0].split('-')
-        var spl2 = spl[1].split(':')
-        this.lineChartLabels.push(`${spl1[2]}/${spl1[1]} - ${spl2[0]}:${spl2[1]}`)
-        umidades.push(item['umidade'])
-        var t = (item['temperatura'] - 32) / 1.8
-        var t2 = (item['temperatura2'] - 32) / 1.8
-        temps.push(parseFloat(t.toFixed(1)))
-        temps2.push(parseFloat(t2.toFixed(1)))
-        this.temperaturas.push(parseFloat(t.toFixed(1)))
+        // var spl = e.data().createdAt.split(' ')
+        // var spl1 = spl[0].split('-')
+        // var spl2 = spl[1].split(':')
+        this.lineChartLabels.unshift(new Date(e.data().createdAt * 1000).getDate()+ " - " + new Date(e.data().createdAt * 1000).getHours() + ":"+ new Date(e.data().createdAt * 1000).getMinutes())
+        //this.lineChartLabels.push(`${spl1[2]}/${spl1[1]} - ${spl2[0]}:${spl2[1]}`)
+        umidades.unshift(e.data().umid)
+        umidades2.unshift(e.data().umid2)
+        var t = e.data().temp // (e.data().temp - 32) / 1.8
+        var t2 = e.data().temp2 // (e.data().temp2 - 32) / 1.8
+        temps.unshift(parseFloat(t.toFixed(1)))
+        temps2.unshift(parseFloat(t2.toFixed(1)))
+        this.temperaturas.unshift(parseFloat(t.toFixed(1)))
         //console.log('dddd', parseFloat(t.toFixed(1)), item['temperatura'])
         //this.lineChartData.push({data: item['temperatura'], label:"Temperatura"}, {data: item['umidade'], label:"Umidade"})
         //datas.push(new Date(item['updated']).getDay()+ " - " + new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes())
       })
-      this.lineChartData.push({data: temps, label:"Temperatura (ºC)"}, {data: temps2, label:"Temperatura2 (ºC)"}, {data: umidades, label:"Umidade (%)"})
+      
+      this.lineChartData.push({data: temps, label:"Temperatura (ºC)"}, {data: temps2, label:"Temperatura2 (ºC)"}, {data: umidades, label:"Umidade (%)"}, {data: umidades2, label:"Umidade2 (%)"})
       //this.lineChartMethod(temperaturas, umidades, datas)
     }
   )

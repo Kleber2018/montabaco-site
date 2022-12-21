@@ -1,7 +1,7 @@
 <main class="main" fxFlex="100%" fxLayoutAlign="center start">
      <section fxLayout="column" class="section">
           <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="center" *ngIf="medicao">
-               <h3>São João do Triunfo/PR</h3>
+               <h3>Controladores em teste</h3>
           </section>
 
           <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="center" *ngIf="medicao">
@@ -12,7 +12,7 @@
                               <p>Temperatura</p>
                               <div fxLayout="row">
                                    <mat-icon aria-hidden="false" aria-label="Temperatura icone" style="margin: 8px 0px;">thermostat</mat-icon>
-                                   <h2 style="margin: 8px 0px;">{{medicao.temperatura}}ºC</h2>
+                                   <h2 style="margin: 8px 0px;">{{medicao.temperatura}}ºF</h2>
                               </div>
                          </section>
                          <section fxLayout="column" class="card-content" fxLayoutAlign="center center" style="color: blue;">
@@ -45,9 +45,9 @@
           </section>
           <section fxFlex="100%"  fxLayout="row" fxLayoutAlign="center space-between"  *ngFor="let medidor of medidores" style='padding: 4px;'>
                <button mat-raised-button 
-               (click)="getMedicoesSubscribe(medidor.id)">
-                 {{medidor.id}}
-             </button>
+                    (click)="getMedicoesSubscribe(medidor.id)">
+                    {{medidor.id}}
+               </button>
           </section>
      </section>
 

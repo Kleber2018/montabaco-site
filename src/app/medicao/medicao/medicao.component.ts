@@ -142,7 +142,9 @@ setCurrentTheme(theme: Theme) {
     private themeService: ThemeService,
     private medicaoService: MedicaoService
     ) {     
-      this.getMedidoresPromise()
+     // this.getMedidoresPromise()
+      this.getMedicaoSubscribe("21588224")
+      this.getMedicoesSubscribe("21588224")
   }
 
   ngOnInit(): void {
@@ -153,12 +155,12 @@ setCurrentTheme(theme: Theme) {
   async getMedidoresPromise(){
     this.medidores = await this.medicaoService.getMedidores().then(async res => {
       this.medidores = await res.docs.map((e, index) => {
-        console.log('chegou', e)
+        //console.log('chegou', e)
         //console.log(e.payload.val())
         return {id : e.data().id,
                 order : index+1 }
       });
-      console.log('chegou medidores', this.medidores )
+      //console.log('chegou medidores', this.medidores )
       this.medidores.sort((a, b)=> {
         return +a.order - +b.order
       });
@@ -174,7 +176,7 @@ setCurrentTheme(theme: Theme) {
       var primeiraMedicao = true;
       med.docs.map(e => { 
         if(primeiraMedicao){
-          this.medicao.updated = new Date(e.data().createdAt * 1000).getDate()+"/"+new Date(e.data().createdAt * 1000).getMonth()+ " - " + new Date(e.data().createdAt * 1000).getHours() + ":"+ new Date(e.data().createdAt * 1000).getMinutes()
+          this.medicao.updated = new Date(e.data().createdAt * 1000).getDate()+"/"+((new Date(e.data().createdAt * 1000).getMonth())+1) + " - " + new Date(e.data().createdAt * 1000).getHours() + ":"+ new Date(e.data().createdAt * 1000).getMinutes()
           primeiraMedicao = false;
           this.medicao.temperatura = e.data().temp
           this.medicao.umidade = e.data().umid
@@ -209,35 +211,38 @@ setCurrentTheme(theme: Theme) {
       //var datas = []
       this.temperaturas = []
       medicoes.docs.map(e => { 
-        // if(primeiraMedicao){
-        //   this.medicao.updated = new Date(e.data().createdAt * 1000).getDate()+"/"+new Date(e.data().createdAt * 1000).getMonth()+ " - " + new Date(e.data().createdAt * 1000).getHours() + ":"+ new Date(e.data().createdAt * 1000).getMinutes()
-        //   primeiraMedicao = false;
-        //   this.medicao.temperatura = e.data().temp
-        //   this.medicao.umidade = e.data().umid
-        // }
-       // console.log(e.data())
-        var dadosGrafico = [['Data', 'Umidade', 'Temperatura', 'Temperatura2']]
-        //dadosGrafico.push([new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes(),item['umidade'], item['temperatura']])
-        //this.lineChartLabels.push(new Date(item['updated']).getDay()+ " - " + new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes())
-        // var spl = e.data().createdAt.split(' ')
-        // var spl1 = spl[0].split('-')
-        // var spl2 = spl[1].split(':')
-        this.lineChartLabels.unshift(new Date(e.data().createdAt * 1000).getDate()+ " - " + new Date(e.data().createdAt * 1000).getHours() + ":"+ new Date(e.data().createdAt * 1000).getMinutes())
-        //this.lineChartLabels.push(`${spl1[2]}/${spl1[1]} - ${spl2[0]}:${spl2[1]}`)
-        umidades.unshift(e.data().umid)
-        umidades2.unshift(e.data().umid2)
-        var t = e.data().temp // (e.data().temp - 32) / 1.8
-        var t2 = e.data().temp2 // (e.data().temp2 - 32) / 1.8
-        temps.unshift(parseFloat(t.toFixed(1)))
-        temps2.unshift(parseFloat(t2.toFixed(1)))
-        this.temperaturas.unshift(parseFloat(t.toFixed(1)))
-        //console.log('dddd', parseFloat(t.toFixed(1)), item['temperatura'])
-        //this.lineChartData.push({data: item['temperatura'], label:"Temperatura"}, {data: item['umidade'], label:"Umidade"})
-        //datas.push(new Date(item['updated']).getDay()+ " - " + new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes())
-      })
-      
-      this.lineChartData.push({data: temps, label:"Temperatura (ºC)"}, {data: temps2, label:"Temperatura2 (ºC)"}, {data: umidades, label:"Umidade (%)"}, {data: umidades2, label:"Umidade2 (%)"})
-      //this.lineChartMethod(temperaturas, umidades, datas)
+        if(e.data().temp > 0){
+            // if(primeiraMedicao){
+            //   this.medicao.updated = new Date(e.data().createdAt * 1000).getDate()+"/"+new Date(e.data().createdAt * 1000).getMonth()+ " - " + new Date(e.data().createdAt * 1000).getHours() + ":"+ new Date(e.data().createdAt * 1000).getMinutes()
+            //   primeiraMedicao = false;
+            //   this.medicao.temperatura = e.data().temp
+            //   this.medicao.umidade = e.data().umid
+            // }
+          // console.log(e.data())
+            var dadosGrafico = [['Data', 'Umidade', 'Temperatura', 'Temperatura2']]
+            //dadosGrafico.push([new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes(),item['umidade'], item['temperatura']])
+            //this.lineChartLabels.push(new Date(item['updated']).getDay()+ " - " + new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes())
+            // var spl = e.data().createdAt.split(' ')
+            // var spl1 = spl[0].split('-')
+            // var spl2 = spl[1].split(':')
+            this.lineChartLabels.unshift(new Date(e.data().createdAt * 1000).getDate()+ " - " + new Date(e.data().createdAt * 1000).getHours() + ":"+ new Date(e.data().createdAt * 1000).getMinutes())
+            //this.lineChartLabels.push(`${spl1[2]}/${spl1[1]} - ${spl2[0]}:${spl2[1]}`)
+            umidades.unshift(e.data().umid)
+            umidades2.unshift(e.data().umid2)
+            var t = e.data().temp // (e.data().temp - 32) / 1.8
+            var t2 = e.data().temp2 // (e.data().temp2 - 32) / 1.8
+            temps.unshift(parseFloat(t.toFixed(1)))
+            temps2.unshift(parseFloat(t2.toFixed(1)))
+            this.temperaturas.unshift(parseFloat(t.toFixed(1)))
+            //console.log('dddd', parseFloat(t.toFixed(1)), item['temperatura'])
+            //this.lineChartData.push({data: item['temperatura'], label:"Temperatura"}, {data: item['umidade'], label:"Umidade"})
+            //datas.push(new Date(item['updated']).getDay()+ " - " + new Date(item['updated']).getHours() + ":"+ new Date(item['updated']).getMinutes())
+          }
+        })
+        
+        this.lineChartData.push({data: temps, label:"Temperatura (ºC)"}, {data: temps2, label:"Temperatura2 (ºC)"}, {data: umidades, label:"Umidade (%)"}, {data: umidades2, label:"Umidade2 (%)"})
+        //this.lineChartMethod(temperaturas, umidades, datas)
+        
     }
   )
 

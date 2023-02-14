@@ -136,6 +136,7 @@ setCurrentTheme(theme: Theme) {
 }
 
   public medidores //= ['000000003862b5f0', '000000005ff1c9d4', '0000000093348e20']
+  public id_monitorado = "aaa"
 
   public medicao = {temperatura: 0, umidade: 0, updated: "sem medição"};
   public logs: Log[] = [];
@@ -148,6 +149,10 @@ setCurrentTheme(theme: Theme) {
   }
 
   ngOnInit(): void {
+    setInterval(function(){
+      this.getMedicoesSubscribe("21582182000");
+      //executar requisição AJAX para capturar os dados e atualizar a tabela
+    },6000);
   }
 
 
@@ -155,19 +160,25 @@ setCurrentTheme(theme: Theme) {
   async getMedidoresPromise(){
     this.medidores = await this.medicaoService.getMedidores().then(async res => {
       this.medidores = await res.docs.map((e, index) => {
-        console.log('chegou', e)
+        //console.log('chegou', e)
         //console.log(e.payload.val())
         return {id : e.data().id,
                 order : index+1 }
       });
-      console.log('chegou medidores', this.medidores )
+     // console.log('chegou medidores', this.medidores )
       this.medidores.sort((a, b)=> {
         return +a.order - +b.order
       });
       return  this.medidores 
     });
     if(this.medidores){
-      this.getMedicoesSubscribe(this.medidores[0].id)
+      this.medidores.push({id : "2195114000",
+        order : 2 })
+        this.medidores.unshift({id : "21582182001",
+        order : 1 })
+        this.medidores.unshift({id : "21582182000",
+        order : 0 })
+      this.getMedicoesSubscribe(this.medidores[1].id)
     }
   }
 
@@ -203,16 +214,24 @@ setCurrentTheme(theme: Theme) {
     // msg_MQTT_set = id + "#" +cod_secure + "#L#SET#"+ String(set_temp) + "#"+ String(set_umid) + "#" + String(status_ventoinha_rele) + "#" + String(t.mday) + "/" + String(t.mon) + "/"  + String(t.year-2000) +"#"+ String(t.hour) + ":" + String(t.min) +"#"+ String(numero_etapa)+"#";     
     this.medicaoService.getLogs(id).then(lgs => {
       lgs.docs.map(lg => {
-        console.log(lg.data())
+       // console.log(lg.data())
         this.logs.push(lg.data());
       })
     })
 
   }
 
-  getMedicoesSubscribe(id: string){
+  subs_med;
+  async getMedicoesSubscribe(id: string){
+
+
     this.getMedicaoSubscribe(id)
     this.getLogsSubscribe(id)
+
+    // const $doc = await this.medicaoService.getMedicoesSnapshot(id)
+    // console.log("retorno")
+    // console.log($doc)
+
     this.medicaoService.getMedicoes(id).then(medicoes => {
       var umidades = []
       var umidades2 = []

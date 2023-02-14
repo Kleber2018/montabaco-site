@@ -129,9 +129,9 @@ export class MedicaoService {
         where("id", "==", '21951140'),
         //where("filtro", "==", 0),
        //where("createdAt", ">", timestampInic),
-        where("createdAt", "<", timestampFim),
+       // where("createdAt", "<", timestampFim),
         orderBy("createdAt", "desc") ,  
-        limit(120)
+        limit(90)
       )
       );
     } else if(id == '21582182001'){
@@ -151,7 +151,7 @@ export class MedicaoService {
        //where("createdAt", ">", timestampInic),
         //where("createdAt", "<", timestampFim),
         orderBy("createdAt", "desc") ,  
-        limit(100)
+        limit(90)
         )
       );
     } else {
